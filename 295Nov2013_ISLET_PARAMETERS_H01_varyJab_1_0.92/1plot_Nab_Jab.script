@@ -1,0 +1,45 @@
+#!/bin/sh
+
+gnuplot -persist << EOF
+set term postscript enhanced color "Times-Roman" 12
+set autoscale
+set key right top
+set pointsize 1
+set xlabel "Jab"
+set ylabel "Nab"
+set output "Nab-Jab.eps"
+plot "average_thermal.dat" u 2:5 t "Nab" w p lt -1 pt 7
+EOF
+
+gnuplot -persist << EOF
+set term postscript enhanced color "Times-Roman" 12
+set autoscale
+set key right top
+set pointsize 1
+set xlabel "Jab"
+set ylabel "FNab"
+set output "FNab-Jab.eps"
+plot "average_thermal.dat" u 2:8 t "Nab" w p lt -1 pt 7
+EOF
+
+gnuplot -persist << EOF
+set term postscript enhanced color "Times-Roman" 12
+set autoscale
+set key right top
+set pointsize 1
+set xlabel "Jab"
+set ylabel "Naa"
+set output "Naa-Jab.eps"
+plot "average_thermal.dat" u 2:3 t "Naa" w p lt -1 pt 7
+EOF
+
+gnuplot -persist << EOF
+set term postscript enhanced color "Times-Roman" 12
+set autoscale
+set key right top
+set pointsize 1
+set xlabel "Jab"
+set ylabel "Nbb"
+set output "Nbb-Jab.eps"
+plot "average_thermal.dat" u 2:4 t "Nbb" w p lt -1 pt 7
+EOF

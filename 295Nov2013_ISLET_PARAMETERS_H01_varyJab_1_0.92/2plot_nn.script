@@ -1,0 +1,50 @@
+#!/bin/sh
+
+#=========================================================================================
+# Loai bo, chi lay tu cot 31 den cot 35 cua file parameter.in
+cut -c31-35 1parameter.in > parameter_file_giantiep.dat
+
+# Doc gia tri dua vao so dong
+i=1
+while [ $i -le 35 ]
+do
+read value
+
+if [ $i -eq 8 ]
+then
+name_data=$value
+fi
+
+if [ $i -eq 9 ]
+then
+r02=$value
+fi
+
+if [ $i -eq 12 ]
+then
+alpha0=$value
+fi
+i=$(echo "scale=0; $i+1" | bc)
+done < parameter_file_giantiep.dat
+
+rm parameter_file_giantiep.dat
+
+echo "name_data:" $name_data
+echo "r02: " $r02
+echo "alpha0: " $alpha0
+
+gnuplot -persist << EOF
+set term postscript enhanced color "Times-Roman" 25
+set autoscale
+set key right top
+set pointsize 1
+set xtics 1
+set xlabel "nn"
+set ylabel "P"
+set output "P-nn$r02 $alpha0.eps"
+set title "$name_data : r02=$r02; alpha0=$alpha0"
+plot "nn_i_final.dat" u 1:2 notitle w p lt -1 pt 7
+
+EOF
+
+

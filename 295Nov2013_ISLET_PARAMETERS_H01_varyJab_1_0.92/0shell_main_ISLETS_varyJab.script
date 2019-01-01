@@ -1,0 +1,129 @@
+#!/bin/sh
+# ===========================================================================================
+# **************** Lua chon buoc tien hanh ********************
+# ===========================================================================================
+
+echo -n "Choise the step (1 for compile parallel Jab, 2 for collection) : "
+read number_buoc
+
+# ===========================================================================================
+#  ****************** COMPILE Parallel Jab ******************
+# ===========================================================================================
+# ---------------------------------------------
+# Nhap cac gia tri vao
+if [ $number_buoc -eq 1 ]
+then
+echo "COMPILE Parallel Jab"
+
+clear
+rm -r config_ini_3D
+rm -r config_3D
+rm *.dat
+rm a.out
+gfortran -Wall -fdefault-integer-8 -fdefault-real-8 1main_BIO.f90
+
+echo -n "Value Jab-min = "
+read Jabmin
+
+echo -n "Value Jab-max = "
+read Jabmax
+
+echo -n "Value n-Jab = "
+read nJab
+
+echo -n "Name of data:"
+read name_data
+
+if [ $nJab -eq 1 ]
+then
+delJab=0
+else
+delJab=$(echo "scale=6; ($Jabmax-$Jabmin)/($nJab-1)" | bc)
+fi
+echo "delJab=$delJab"
+
+# ---------------------------------------------
+# Tao cac thu muc, compile lan luot tung thu muc
+
+mkdir a
+cp 1parameter.in a
+cp a.out a
+cp $name_data.txt a
+
+i_folder=1
+while [ $i_folder -le $nJab ]
+do
+cp -r a $i_folder
+
+Jab=$(echo "scale=6; $Jabmin+($i_folder-1)*$delJab" | bc)
+
+sed -i "s/'Jabmin                    '  1.0/'Jabmin                    '  $Jab/g" $i_folder/1parameter.in
+
+echo "running folder $i_folder"
+cd $i_folder
+./a.out &
+cd ..
+
+i_folder=$(echo "scale=0; $i_folder+1" | bc)
+
+done
+
+rm -r a
+
+fi
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# ===========================================================================================
+# ===========================================================================================
+#  ****************** BUOC TONG HOP KET QUA ******************
+# ===========================================================================================
+# ===========================================================================================
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+# ---------------------------------------------
+# Nhap cac gia tri vao
+if [ $number_buoc -eq 2 ]
+then
+echo "BUOC TONG HOP KET QUA SAU KHI COMPILE"
+echo -n "delete folder?"
+read delete_folder
+
+echo -n "Number of folder = "
+read nT
+
+# ---------------------------------------------
+# Tien hanh tong hop ket qua
+rm *.dat
+mkdir config_ini_3D
+cp 1/config_ini_3D/config_ini_3D.pdb config_ini_3D/
+cp 1/nn_i_cell.dat nn_i_cell.dat
+cp 1/Nab0_ini.dat Nab0_ini.dat
+
+mkdir config_3D
+#rm average_thermal.dat
+
+
+i=1
+while [ $i -le $nT ]
+do
+number=$(echo "scale=0;10000000+$i" | bc)
+cp $i/config_3D/config_3D_BIO_10000001.pdb config_3D/config_3D_BIO_$number.pdb
+cat $i/average_thermal.dat >> average_thermal.dat
+cat $i/del_Nabc2_min.dat >> del_Nabc2_min.dat
+
+if [ $delete_folder -eq 1 ]
+then
+rm -r $i
+fi
+
+i=$(echo "scale=0; $i+1" | bc)
+done
+
+fi
+
+# ================================= THE END ============================================
+
+
+
+
+
+

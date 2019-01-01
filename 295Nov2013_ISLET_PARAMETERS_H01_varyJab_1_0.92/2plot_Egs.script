@@ -1,0 +1,13 @@
+#!/bin/sh
+
+gnuplot -persist << EOF
+set term postscript enhanced color "Times-Roman" 18
+set autoscale
+set key right top
+set pointsize 1
+set xlabel "T"
+set ylabel "E"
+set output "E.eps"
+plot "energy.dat" u 1:2 t "E-gs" w p lt -1 pt 7
+EOF
+

@@ -1,0 +1,38 @@
+#!/bin/sh
+
+gnuplot -persist << EOF
+set term postscript enhanced color "Times-Roman" 25
+set autoscale
+set key right top
+set pointsize 1
+set xlabel "i-times"
+set ylabel "Naa"
+set output "Naa-times.eps"
+plot "average_times.dat" u 1:4 t "Naa" w p lt -1 pt 7
+
+EOF
+
+gnuplot -persist << EOF
+set term postscript enhanced color "Times-Roman" 25
+set autoscale
+set key right top
+set pointsize 1
+set xlabel "i-times"
+set ylabel "Nbb"
+set output "Nbb-times.eps"
+plot "average_times.dat" u 1:5 t "Nbb" w p lt 3 pt 65
+
+EOF
+
+gnuplot -persist << EOF
+set term postscript enhanced color "Times-Roman" 25
+set autoscale
+set key right top
+set pointsize 1
+set xlabel "i-times"
+set ylabel "N"
+set output "Nab-times.eps"
+plot "average_times.dat" u 1:6 t "Nab" w p lt 1 pt 13
+
+EOF
+#"average_times.dat" u 1:6 t "Nab" w p lt 1 pt 13
