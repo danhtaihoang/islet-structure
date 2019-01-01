@@ -7,5 +7,5 @@ Morphogenesis, spontaneous formation of organism structure, is essential for lif
 
 Reference
 ----------------------------
-`Danh-Tai Hoang, Hitomi Matsunari, Masaki Nagaya, Hiroshi Nagashima, J. Michael Millis, Piotr Witkowski, Vipul Periwal, Manami Hara, Junghyo Jo, A Conserved Rule for Pancreatic Islet Organization, PLOS ONE, 9, 10, e110384 (2014). <https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0110384>`_.
+`Danh-Tai Hoang, Hitomi Matsunari, Masaki Nagaya, Hiroshi Nagashima, J. Michael Millis, Piotr Witkowski, Vipul Periwal, Manami Hara, Junghyo Jo, A Conserved Rule for Pancreatic Islet Organization, PLOS ONE, 9, 10, e110384 (2014). <https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0110384>`_
 
